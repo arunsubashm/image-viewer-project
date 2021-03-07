@@ -40,6 +40,11 @@ class Login extends Component {
             passwordError: false,
             authFailure:false
         }
+        this.usertable = {
+            username:"arunsubash",
+            password:"test",
+            authtoken:"ccccc"
+        }
     }
 
     usernameChangeHandler = event => {
@@ -70,8 +75,14 @@ class Login extends Component {
             error = true;
         }
 
-        if (error == false)
-            this.setState({authFailure: true});
+        if (error == false) {
+            if ((this.state.username == this.usertable.username) &&
+                (this.state.password == this.usertable.password)) {
+                    console.log("Auth success");
+            } else {
+                this.setState({authFailure: true});
+            }
+        }
     }
 
     render() {
