@@ -35,20 +35,43 @@ class Home extends Component {
         super();
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            usernameError: false,
+            passwordError: false,
+            authFailure:false
         }
     }
 
     usernameChangeHandler = event => {
         this.setState({ username: event.target.value });
+        this.setState({usernameError: false});
+        this.setState({authFailure: false});
     }
     
     passwordChangeHandler = event => {
         this.setState({ password: event.target.value });
+        this.setState({passwordError: false});
+        this.setState({authFailure: false});
     }
     
     authHandler = () => {
+        let error = false;
+
         console.log(this.state.username);
+        console.log(this.state.password);
+
+        if (this.state.username == "") {
+            this.setState({usernameError: true});
+            error = true;
+        }
+        
+        if (this.state.password == "") {
+            this.setState({passwordError: true});
+            error = true;
+        }
+
+        if (error == false)
+            this.setState({authFailure: true});
     }
 
     render() {
@@ -73,14 +96,18 @@ class Home extends Component {
                                 </FormControl>
                                 <br /><br />
                                 <FormControl className={classes.formControl}>
-                                    <InputLabel htmlFor="username">Username *</InputLabel>
+                                    <InputLabel htmlFor="username" required="true">Username</InputLabel>
                                     <Input id="username" onChange={this.usernameChangeHandler} aria-describedby="my-helper-text" />
+                                    {this.state.usernameError ? <span style={{color: "red"}}>required</span> : ''} 
                                 </FormControl>
                                 <br /><br />
                                 <FormControl className={classes.formControl}>
-                                    <InputLabel htmlFor="password">Password *</InputLabel>
+                                    <InputLabel htmlFor="password" required="true">Password</InputLabel>
                                     <Input id="password" onChange={this.passwordChangeHandler} aria-describedby="my-helper-text" />
+                                    {this.state.passwordError ? <span style={{color: "red"}}>required</span> : ''} 
                                 </FormControl>
+                                <br /><br />
+                                {this.state.authFailure ? <span style={{color: "red"}}>Incorrect username and/or password</span> : ''} 
                                 <br /><br />
                                 <FormControl className={classes.buttonControl}>
                                     <Button onClick={() => this.authHandler()} variant="contained" color="primary">
