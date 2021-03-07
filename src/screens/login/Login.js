@@ -65,20 +65,21 @@ class Login extends Component {
         console.log(this.state.username);
         console.log(this.state.password);
 
-        if (this.state.username == "") {
+        if (this.state.username === "") {
             this.setState({usernameError: true});
             error = true;
         }
         
-        if (this.state.password == "") {
+        if (this.state.password === "") {
             this.setState({passwordError: true});
             error = true;
         }
 
-        if (error == false) {
-            if ((this.state.username == this.usertable.username) &&
-                (this.state.password == this.usertable.password)) {
+        if (error === false) {
+            if ((this.state.username === this.usertable.username) &&
+                (this.state.password === this.usertable.password)) {
                     console.log("Auth success");
+                    this.props.history.push('/home');
             } else {
                 this.setState({authFailure: true});
             }
