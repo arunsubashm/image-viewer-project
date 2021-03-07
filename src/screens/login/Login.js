@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import './Home.css';
+import './Login.css';
 
 const styles = theme => ({
     root: {
@@ -29,7 +29,7 @@ const styles = theme => ({
     }
 });
 
-class Home extends Component {
+class Login extends Component {
 
     constructor() {
         super();
@@ -123,4 +123,4 @@ class Home extends Component {
     }
 }
 
-export default withStyles(styles)(Home);
+export default withStyles(styles)(Login);
