@@ -1,41 +1,56 @@
 import React, { Component } from 'react';
-import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Avatar from '@material-ui/core/Avatar';
+import { withStyles } from '@material-ui/core/styles';
+import { red } from '@material-ui/core/colors';
 import './Header.css';
 
-export class LoginHeader extends Component {
-    render () {
-        return (
-            <div>
-                <header className="app-header">
-                    <div className="app-logo">
-                        <span>Image Viewer</span>
-                    </div>
-                </header>
-            </div>
-        )
-    }
-}
+const styles = theme => ({
+    avatar: {
+        backgroundColor: red[500],
+        float: 'right',
+        border:'10px',
+    },
+});
 
-export default class Header extends Component {
+class Header extends Component {
 
     render () {
-        return (
-            <div>
-                <header className="app-header">
-                    <div className="app-logo">
-                        <span>Image Viewer</span>
-                        <div className="input">
-                            <InputLabel htmlFor="search"></InputLabel>
-                            <Input id="search" placeholder="Search..." onChange={this.searchHandler} aria-describedby="my-helper-text" startAdornment={
-                             <InputAdornment position="start"><SearchIcon /></InputAdornment> } /> 
+        const { classes } = this.props;
+
+        if (this.props.type == "Login") {
+            return (
+                <div>
+                    <div className="app-header">
+                        <div className="app-logo">
+                            <span>Image Viewer</span>
                         </div>
                     </div>
-                </header>
-            </div>
-        )
+                </div>
+            )
+        } else {
+            return (
+                <div>
+                    <div className="app-header">
+                        <div className="app-logo">
+                            <span>Image Viewer</span>
+                            <Avatar aria-label="user-icon" backgroundColor="red" className={classes.avatar}>
+                                AS
+                            </Avatar>
+                            <div className="input">
+                                <InputLabel htmlFor="search"></InputLabel>
+                                <Input id="search" placeholder="Search..." onChange={this.searchHandler} aria-describedby="my-helper-text" startAdornment={
+                                <InputAdornment position="start"><SearchIcon /></InputAdornment> } /> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )
+        }
     }
 }
+
+export default withStyles(styles)(Header);

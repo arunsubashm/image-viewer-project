@@ -12,8 +12,6 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
 import Divider from "@material-ui/core/Divider";
 
 const styles = theme => ({
@@ -30,10 +28,6 @@ const styles = theme => ({
     divider: {
         margin: '20px',
     },
-    gridListImages: {
-    },
-    gridListElements: {
-    },
 });
 
 class Home extends Component {
@@ -46,12 +40,16 @@ class Home extends Component {
         }
     }
 
+    imageDynamicSearch = ()  => {
+        return this.imageDetails;
+    }
+
     componentWillMount() {
         // Get the user details
         let data = null;
         let xhr = new XMLHttpRequest();
         let that = this;
-        let token = "GQVJYWXhDWnNWdjNFamdOcEdMaGFyeUhiOHpWWVdZAanprVm5xa0Q4RjhuQVlGOWdUMlpQNUpNd1d0NzdrY0ZA4T3ZAuVkhqSUhzZAnl3Sy1JUEVUN3drU2U2OVhocVJnOVNSODlLWFhHZAXdJTjlqQy1XNQZDZD";
+        let token = "IGQVJYWXhDWnNWdjNFamdOcEdMaGFyeUhiOHpWWVdZAanprVm5xa0Q4RjhuQVlGOWdUMlpQNUpNd1d0NzdrY0ZA4T3ZAuVkhqSUhzZAnl3Sy1JUEVUN3drU2U2OVhocVJnOVNSODlLWFhHZAXdJTjlqQy1XNQZDZD";
 
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
@@ -95,7 +93,7 @@ class Home extends Component {
                 <Header />
                 <div className="grid-container">
                     {this.state.imageDetails.map((images) => (
-                        <div key={images.id} className={classes.gridListElements}>
+                        <div key={images.id}>
                             <Card className={classes.root}>
                                 <CardHeader
                                     avatar={
@@ -121,7 +119,6 @@ class Home extends Component {
                                         <FavoriteIcon />
                                     </IconButton>
                                 </CardActions>
-                                <Divider className={classes.divider} light />
                             </Card>
                         </div>
                     ))}

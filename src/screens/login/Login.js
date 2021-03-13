@@ -7,8 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
-import LoginHeader from '../../common/header/Header';
 import './Login.css';
+import Header from '../../common/header/Header';
 
 const styles = theme => ({
     root: {
@@ -91,7 +91,7 @@ class Login extends Component {
         const { classes } = this.props;
         return (
             <div>
-                <LoginHeader />
+                <Header type="Login" />
                 <div className="flex-container">
                     <div className="center">
                         <Card>
