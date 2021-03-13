@@ -1,6 +1,40 @@
 import React, { Component } from 'react';
 import Header from '../../common/header/Header'
 import './Home.css';
+import { withStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import CardMedia from '@material-ui/core/CardMedia';
+import CardContent from '@material-ui/core/CardContent';
+import CardActions from '@material-ui/core/CardActions';
+import Avatar from '@material-ui/core/Avatar';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import { red } from '@material-ui/core/colors';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import Divider from "@material-ui/core/Divider";
+
+const styles = theme => ({
+    root: {
+        margin: '20px',
+    },
+    media: {
+        paddingTop: '100%',
+        margin: '20px',
+    },
+    avatar: {
+        backgroundColor: red[500],
+    },
+    divider: {
+        margin: '20px',
+    },
+    gridListImages: {
+    },
+    gridListElements: {
+    },
+});
 
 class Home extends Component {
 
@@ -33,9 +67,11 @@ class Home extends Component {
                             that.setState({
                             tempImage: JSON.parse(this.responseText)
                             });
+                            that.state.tempImage.caption = that.state.userDetails[i].caption;
                             that.state.imageDetails.push(that.state.tempImage);
-                            console.log(that.state.imageDetails[i].id);
-                            console.log(that.state.imageDetails[i].media_url);
+                            //console.log(that.state.imageDetails[i].id);
+                            //console.log(that.state.imageDetails[i].media_url);
+                            that.setState({ state: that.state });
                         }
                     });
                     xhra[i].open("GET", "https://graph.instagram.com/" + that.state.userDetails[i].id +
@@ -53,12 +89,46 @@ class Home extends Component {
     }
 
     render () {
+        const { classes } = this.props;
         return (
             <div>
                 <Header />
+                <div className="grid-container">
+                    {this.state.imageDetails.map((images) => (
+                        <div key={images.id} className={classes.gridListElements}>
+                            <Card className={classes.root}>
+                                <CardHeader
+                                    avatar={
+                                    <Avatar aria-label="user-icon" className={classes.avatar}>
+                                        AS
+                                    </Avatar>
+                                    }
+                                    title={images.username}
+                                    subheader={images.timestamp}
+                                />
+                                <CardMedia
+                                    className={classes.media}
+                                    image={images.media_url}
+                                />
+                                <Divider className={classes.divider} light />
+                                <CardContent>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        {images.caption} 
+                                    </Typography>
+                                </CardContent>
+                                <CardActions>
+                                    <IconButton aria-label="add to favorites">
+                                        <FavoriteIcon />
+                                    </IconButton>
+                                </CardActions>
+                                <Divider className={classes.divider} light />
+                            </Card>
+                        </div>
+                    ))}
+                </div>
             </div>
         )
     }
 }
 
-export default (Home);
+export default withStyles(styles)(Home);
