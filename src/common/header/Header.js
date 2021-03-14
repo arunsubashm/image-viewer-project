@@ -28,6 +28,7 @@ class Header extends Component {
         this.searchHandler = this.searchHandler.bind(this);
     }
 
+    /* Collect the search key and send to Home Page */
     searchHandler = (e) => {
         this.setState({searchTerm : e.target.value});
         this.props.onSearchSubmit(this.state)
@@ -36,6 +37,7 @@ class Header extends Component {
     render () {
         const { classes } = this.props;
 
+        /* Header used by both login and home pages */
         if (this.props.type === "Login") {
             return (
                 <div>

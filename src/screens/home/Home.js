@@ -71,6 +71,7 @@ class Home extends Component {
         this.authenticated = true;
     }
 
+    /* Find all images matching the search string */
     updateImageRecords = (str) => {
         this.setState({searchTerm : str.searchTerm});
         var newAr = this.state.imageDetails.filter(function (e) {
@@ -79,6 +80,7 @@ class Home extends Component {
         this.setState({currImageDetails : newAr});
     }
 
+    /* Like Handler */
     incrementLike = (id)  => {
         var index = this.state.imageDetails.findIndex(function(find, index) {
             if (find.id === id)
@@ -99,6 +101,7 @@ class Home extends Component {
         this.setState({ comments: event.target.value });
     }
 
+    /* Update Comment corresponding to an Image ID */
     updateComment = (id) => {
         var index = this.state.imageDetails.findIndex(function(find, index) {
             if (find.id === id)
@@ -117,6 +120,7 @@ class Home extends Component {
         let that = this;
         let token = "IGQVJYWXhDWnNWdjNFamdOcEdMaGFyeUhiOHpWWVdZAanprVm5xa0Q4RjhuQVlGOWdUMlpQNUpNd1d0NzdrY0ZA4T3ZAuVkhqSUhzZAnl3Sy1JUEVUN3drU2U2OVhocVJnOVNSODlLWFhHZAXdJTjlqQy1XNQZDZD";
 
+        /* Get User details */
         xhr.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
                 that.setState({
@@ -131,6 +135,7 @@ class Home extends Component {
                             that.setState({
                             tempImage: JSON.parse(this.responseText)
                             });
+                            /* Initalise all data corresponding to the Image */
                             that.state.tempImage.caption = that.state.userDetails[i].caption;
                             that.state.tempImage.likes = that.state.tempImage.id%10;
                             that.state.tempImage.liked = false;
@@ -159,6 +164,7 @@ class Home extends Component {
         const { classes } = this.props;
         const { state } = this.props.location;
 
+        /* Make sure we re-direct to login page for unauthenticated Users */
         if (state === true) {
             this.updateAuthenticated();
         } else {

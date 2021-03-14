@@ -48,6 +48,7 @@ class Login extends Component {
         }
     }
 
+    /* Handle Username and password inputs */
     usernameChangeHandler = event => {
         this.setState({ username: event.target.value });
         this.setState({usernameError: false});
@@ -60,6 +61,7 @@ class Login extends Component {
         this.setState({authFailure: false});
     }
     
+    /* Authentication handler - On success redirect to home page */
     authHandler = () => {
         let error = false;
 

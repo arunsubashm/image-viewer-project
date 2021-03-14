@@ -1,7 +1,9 @@
+/* Top Header Frame */
 .app-header {
     background-color: #263238;
     height: 96px;
 }
+/* Logo Frame in header */
 .app-logo {
     color: #fff;
     font-size: 18px;
@@ -11,6 +13,7 @@
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
 }
+/* Search input */
 .input {
     display:flex;
     left:75%;
