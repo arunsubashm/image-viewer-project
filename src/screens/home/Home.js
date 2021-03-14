@@ -31,7 +31,12 @@ const styles = theme => ({
     },
     like: {
         padding:'10px',
-    }
+    },
+    buttonDef: {
+    },
+    buttonRed: {
+        color: red[500],
+    },
 });
 
 class Home extends Component {
@@ -41,7 +46,19 @@ class Home extends Component {
         this.state = {
             userDetails: [],
             imageDetails: [],
+            currImageDetails: [],
+            searchTerm:' ',
         }
+    }
+
+    updateImageRecords = (str) => {
+        console.log(str.searchTerm);
+        this.setState({searchTerm : str.searchTerm});
+        var newAr = this.state.imageDetails.filter(function (e) {
+            return e.caption.toLowerCase().includes(str.searchTerm.toLowerCase());
+        });
+        console.log(newAr);
+        this.setState({currImageDetails : newAr});
     }
 
     incrementLike = (id)  => {
@@ -86,9 +103,9 @@ class Home extends Component {
                             that.state.tempImage.likes = that.state.tempImage.id%10;
                             that.state.tempImage.liked = false;
                             that.state.imageDetails.push(that.state.tempImage);
-                            //console.log(that.state.imageDetails[i].id);
-                            //console.log(that.state.imageDetails[i].media_url);
+                            that.state.currImageDetails.push(that.state.tempImage);
                             that.setState({ state: that.state });
+                            that.setState({ searchTerm: " "});
                         }
                     });
                     xhra[i].open("GET", "https://graph.instagram.com/" + that.state.userDetails[i].id +
@@ -109,9 +126,9 @@ class Home extends Component {
         const { classes } = this.props;
         return (
             <div>
-                <Header />
+                <Header onSearchSubmit={this.updateImageRecords} />
                 <div className="grid-container">
-                    {this.state.imageDetails.map((images) => (
+                    {this.state.currImageDetails.map((images) => (
                         <div key={images.id}>
                             <Card className={classes.root}>
                                 <CardHeader
@@ -135,7 +152,7 @@ class Home extends Component {
                                 </CardContent>
                                 <CardActions>
                                     <IconButton onClick={() => this.incrementLike(images.id)} aria-label="add to favorites">
-                                        <FavoriteIcon/>
+                                        <FavoriteIcon className={classes.buttonDef} />
                                         <span className={classes.like}> {images.likes} Likes</span>
                                     </IconButton>
                                 </CardActions>

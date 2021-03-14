@@ -18,6 +18,19 @@ const styles = theme => ({
 
 class Header extends Component {
 
+    constructor() {
+        super();
+        this.state = {
+            searchTerm:'',
+        }
+        this.searchHandler = this.searchHandler.bind(this);
+    }
+
+    searchHandler = (e) => {
+        this.setState({searchTerm : e.target.value});
+        this.props.onSearchSubmit(this.state)
+    }
+
     render () {
         const { classes } = this.props;
 
