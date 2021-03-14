@@ -64,10 +64,11 @@ class Home extends Component {
             authenticated:false,
             comments:'',
         }
+        this.authenticated = false;
     }
 
     updateAuthenticated = () => {
-        this.state.authenticated = true;
+        this.authenticated = true;
     }
 
     updateImageRecords = (str) => {
@@ -156,6 +157,14 @@ class Home extends Component {
 
     render () {
         const { classes } = this.props;
+        const { state } = this.props.location;
+
+        if (state === true) {
+            this.updateAuthenticated();
+        } else {
+            this.props.history.push('/');
+            return null;
+        }
 
         return (
             <div>
