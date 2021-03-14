@@ -11,8 +11,8 @@ import './Header.css';
 const styles = theme => ({
     avatar: {
         backgroundColor: red[500],
-        float: 'right',
-        border:'10px',
+        display: 'flex',
+        float:'right',
     },
 });
 

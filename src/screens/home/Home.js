@@ -36,7 +36,8 @@ class Home extends Component {
         super();
         this.state = {
             userDetails: [],
-            imageDetails: []
+            imageDetails: [],
+            likes: 0,
         }
     }
 
@@ -66,6 +67,7 @@ class Home extends Component {
                             tempImage: JSON.parse(this.responseText)
                             });
                             that.state.tempImage.caption = that.state.userDetails[i].caption;
+                            that.state.tempImage.likes = 0;
                             that.state.imageDetails.push(that.state.tempImage);
                             //console.log(that.state.imageDetails[i].id);
                             //console.log(that.state.imageDetails[i].media_url);
@@ -117,6 +119,7 @@ class Home extends Component {
                                 <CardActions>
                                     <IconButton aria-label="add to favorites">
                                         <FavoriteIcon />
+                                        <span>  {images.likes} Likes</span>
                                     </IconButton>
                                 </CardActions>
                             </Card>
