@@ -63,9 +63,6 @@ class Login extends Component {
     authHandler = () => {
         let error = false;
 
-        console.log(this.state.username);
-        console.log(this.state.password);
-
         if (this.state.username === "") {
             this.setState({usernameError: true});
             error = true;
@@ -79,8 +76,7 @@ class Login extends Component {
         if (error === false) {
             if ((this.state.username === this.usertable.username) &&
                 (this.state.password === this.usertable.password)) {
-                    console.log("Auth success");
-                    this.props.history.push('/home');
+                    this.props.history.push('/home', true);
             } else {
                 this.setState({authFailure: true});
             }

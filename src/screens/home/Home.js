@@ -13,6 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Divider from "@material-ui/core/Divider";
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
@@ -37,6 +40,16 @@ const styles = theme => ({
     buttonRed: {
         color: red[500],
     },
+    formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 400,
+        maxWidth: 400
+    },
+    buttonControl: {
+        margin: theme.spacing.unit,
+        minWidth: 60,
+        maxWidth: 60
+    },
 });
 
 class Home extends Component {
@@ -48,16 +61,20 @@ class Home extends Component {
             imageDetails: [],
             currImageDetails: [],
             searchTerm:' ',
+            authenticated:false,
+            comments:'',
         }
     }
 
+    updateAuthenticated = () => {
+        this.state.authenticated = true;
+    }
+
     updateImageRecords = (str) => {
-        console.log(str.searchTerm);
         this.setState({searchTerm : str.searchTerm});
         var newAr = this.state.imageDetails.filter(function (e) {
             return e.caption.toLowerCase().includes(str.searchTerm.toLowerCase());
         });
-        console.log(newAr);
         this.setState({currImageDetails : newAr});
     }
 
@@ -69,13 +86,27 @@ class Home extends Component {
         if (this.state.imageDetails[index].liked === true)
             return;
 
-        console.log(this.state.imageDetails[index].liked);
         this.state.imageDetails[index].likes++;
         this.state.imageDetails[index].liked = true;
         let ar = this.state.imageDetails[index].likes;
         let ar1 = this.state.imageDetails[index].liked;
         this.setState({ar : ar});
         this.setState({ar1 : ar1});
+    }
+
+    commentsHandler = event => {
+        this.setState({ comments: event.target.value });
+    }
+
+    updateComment = (id) => {
+        var index = this.state.imageDetails.findIndex(function(find, index) {
+            if (find.id === id)
+                return true;
+        });
+        this.state.imageDetails[index].comments += this.state.comments;
+        this.state.imageDetails[index].comments += "\n";
+        let ar = this.state.imageDetails[index].comments;
+        this.setState({ar : ar});
     }
 
     componentWillMount() {
@@ -102,6 +133,7 @@ class Home extends Component {
                             that.state.tempImage.caption = that.state.userDetails[i].caption;
                             that.state.tempImage.likes = that.state.tempImage.id%10;
                             that.state.tempImage.liked = false;
+                            that.state.tempImage.comments = '';
                             that.state.imageDetails.push(that.state.tempImage);
                             that.state.currImageDetails.push(that.state.tempImage);
                             that.setState({ state: that.state });
@@ -124,6 +156,7 @@ class Home extends Component {
 
     render () {
         const { classes } = this.props;
+
         return (
             <div>
                 <Header onSearchSubmit={this.updateImageRecords} />
@@ -146,9 +179,22 @@ class Home extends Component {
                                 />
                                 <Divider className={classes.divider} light />
                                 <CardContent>
-                                    <Typography variant="body2" color="textSecondary" component="p">
+                                    <Typography variant="h5" color="textPrimary" component="h5">
                                         {images.caption} 
                                     </Typography>
+                                    <br></br>
+                                    <Typography variant="body1" color="textPrimary" component="p">
+                                        {images.comments} 
+                                    </Typography>
+                                    <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="comments" required="true">Add a comment</InputLabel>
+                                    <Input id="comments" onChange={this.commentsHandler} aria-describedby="my-helper-text" />
+                                    </FormControl>
+                                    <FormControl className={classes.buttonControl}>
+                                    <Button onClick={() => this.updateComment(images.id)} variant="contained" color="primary">
+                                        ADD
+                                    </Button>
+                                    </FormControl>
                                 </CardContent>
                                 <CardActions>
                                     <IconButton onClick={() => this.incrementLike(images.id)} aria-label="add to favorites">

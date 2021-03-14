@@ -13,6 +13,7 @@ const styles = theme => ({
         backgroundColor: red[500],
         display: 'flex',
         float:'right',
+        cursor:'pointer',
     },
 });
 
