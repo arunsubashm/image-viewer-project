@@ -21,7 +21,7 @@ class Header extends Component {
     render () {
         const { classes } = this.props;
 
-        if (this.props.type == "Login") {
+        if (this.props.type === "Login") {
             return (
                 <div>
                     <div className="app-header">

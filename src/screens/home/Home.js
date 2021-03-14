@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import Divider from "@material-ui/core/Divider";
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     root: {
@@ -28,6 +29,9 @@ const styles = theme => ({
     divider: {
         margin: '20px',
     },
+    like: {
+        padding:'10px',
+    }
 });
 
 class Home extends Component {
@@ -37,12 +41,24 @@ class Home extends Component {
         this.state = {
             userDetails: [],
             imageDetails: [],
-            likes: 0,
         }
     }
 
-    imageDynamicSearch = ()  => {
-        return this.imageDetails;
+    incrementLike = (id)  => {
+        var index = this.state.imageDetails.findIndex(function(find, index) {
+            if (find.id === id)
+                return true;
+        });
+        if (this.state.imageDetails[index].liked === true)
+            return;
+
+        console.log(this.state.imageDetails[index].liked);
+        this.state.imageDetails[index].likes++;
+        this.state.imageDetails[index].liked = true;
+        let ar = this.state.imageDetails[index].likes;
+        let ar1 = this.state.imageDetails[index].liked;
+        this.setState({ar : ar});
+        this.setState({ar1 : ar1});
     }
 
     componentWillMount() {
@@ -67,7 +83,8 @@ class Home extends Component {
                             tempImage: JSON.parse(this.responseText)
                             });
                             that.state.tempImage.caption = that.state.userDetails[i].caption;
-                            that.state.tempImage.likes = 0;
+                            that.state.tempImage.likes = that.state.tempImage.id%10;
+                            that.state.tempImage.liked = false;
                             that.state.imageDetails.push(that.state.tempImage);
                             //console.log(that.state.imageDetails[i].id);
                             //console.log(that.state.imageDetails[i].media_url);
@@ -117,9 +134,9 @@ class Home extends Component {
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <IconButton aria-label="add to favorites">
-                                        <FavoriteIcon />
-                                        <span>  {images.likes} Likes</span>
+                                    <IconButton onClick={() => this.incrementLike(images.id)} aria-label="add to favorites">
+                                        <FavoriteIcon/>
+                                        <span className={classes.like}> {images.likes} Likes</span>
                                     </IconButton>
                                 </CardActions>
                             </Card>
